@@ -26,20 +26,19 @@ public class HelloController {
     }
 
     @GetMapping(value = "/cars")
-    public String tableCars(@RequestParam(defaultValue = "CARS") String locale, ModelMap model) {
+    public String tableCars(@RequestParam(defaultValue = "en") String locale, ModelMap model) {
         CarService carService = new CarServiceImpl();
         List<Car> carList = carService.listOfCars();
-		model.addAttribute("cars", carList);
+        model.addAttribute("cars", carList);
         checkLocale(locale, model);
         return "cars";
     }
 
-    private void checkLocale(@RequestParam(defaultValue = "CARS") String locale, ModelMap model) {
+    private void checkLocale(String locale, ModelMap model) {
         if (locale.equals("ru")) {
             model.addAttribute("locale", "МАШИНЫ");
-        } else {
+        } else if (locale.equals("en")) {
             model.addAttribute("locale", "CARS");
         }
     }
-
 }
